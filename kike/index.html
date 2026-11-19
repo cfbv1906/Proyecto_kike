@@ -3,49 +3,118 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proyecto kike</title>
-  <style>
-    :root { --fondo: #0f1115; --texto: #f2f3f5; --acento: #7c6cff; --borde: #2a2d36; }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; min-height: 100%; }
-    body {
-      min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 32px; padding: 32px 20px; background: var(--fondo); color: var(--texto);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; text-align: center;
-    }
-    h1 { margin: 0; font-size: clamp(28px, 7vw, 44px); letter-spacing: .02em; }
-    p.sub { margin: 8px 0 0; color: #a6aab5; font-size: 16px; }
-    nav { display: flex; flex-direction: column; gap: 16px; width: min(100%, 420px); }
-    a.boton {
-      display: block; padding: 20px 24px; border-radius: 14px; text-decoration: none;
-      border: 1px solid var(--borde); background: #171a21; color: var(--texto);
-      font-size: 18px; font-weight: 600; transition: transform .15s, border-color .15s, background .15s;
-    }
-    a.boton small { display: block; margin-top: 6px; font-weight: 400; font-size: 14px; color: #a6aab5; }
-    a.boton:hover, a.boton:focus-visible { border-color: var(--acento); background: #1c1f28; transform: translateY(-2px); outline: none; }
-    a.boton.principal { background: var(--acento); border-color: var(--acento); color: #fff; }
-    a.boton.principal small { color: #e7e4ff; }
-    a.boton.principal:hover { background: #8e80ff; }
-    footer { color: #6f7480; font-size: 13px; }
-  </style>
+  <title>KIKE · IMPOSIBLE — Experiencia de realidad aumentada</title>
+  <meta name="description" content="Explora el universo de Kike: su historia, su música y vive la experiencia completa en realidad aumentada." />
+  <meta name="theme-color" content="#A00E08" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/kike.css" />
 </head>
 <body>
-  <header>
-    <h1>NOMBRE DEL PRODUCTO</h1>
-    <p class="sub">Elige cómo quieres vivir la experiencia</p>
-  </header>
 
+<div class="barra">
+  <img src="./assets/logos/kike-blanco.png" alt="Kike" />
   <nav>
-    <a class="boton principal" href="./ar/">
-      Realidad aumentada
-      <small>Apunta la cámara a la tarjeta</small>
-    </a>
-    <a class="boton" href="./filtro/">
-      Filtro facial
-      <small>Usa la cámara frontal</small>
-    </a>
+    <a href="#ar">Realidad aumentada</a>
+    <a href="#filtro">Filtro</a>
   </nav>
+</div>
 
-  <footer>Permite el acceso a la cámara cuando el navegador lo pida.</footer>
+<!-- 1 · HERO -->
+<section class="sec hero rojo-flyer" id="inicio">
+  <div class="arte"><img src="./assets/img/hero-flyer.jpg" alt="Kike — Imposible" width="1100" height="1443" /></div>
+  <div class="in">
+    <h1>Esto no llegó a ti<br/>por casualidad</h1>
+    <span class="garabato" style="margin-inline:auto;background-position:center"></span>
+    <p>Explora el universo de Kike, su historia, su música y vive la experiencia completa.</p>
+    <a class="btn crema" href="#ar">Entrar &rarr;</a>
+  </div>
+  <div class="montanas cr"></div>
+</section>
+
+<!-- 2 · SOBRE KIKE -->
+<section class="sec crema papel sobre" id="sobre">
+  <span class="estrella" style="left:14px;bottom:170px"></span>
+  <div class="in grid">
+    <div>
+      <h2>Sobre<br/>Kike</h2>
+      <p style="margin-top:22px">Artista peruano que encuentra en la música una forma de conectar su historia, sus raíces y su visión del mundo.</p>
+      <p>Llegó a Colombia en busca de nuevas oportunidades para desarrollar su carrera musical y actualmente estudia en EMMAT, donde sigue explorando y fortaleciendo su identidad como artista.</p>
+    </div>
+    <div class="foto"><img src="./assets/img/kike-foto.png" alt="Kike con su guitarra" /></div>
+  </div>
+  <div class="chakana" style="right:-52px;top:42%"></div>
+  <div class="montanas"></div>
+</section>
+
+<!-- 3 · EL EP -->
+<section class="sec negro ep" id="ep">
+  <div class="in cols">
+    <div>
+      <h2>El EP</h2>
+      <p style="margin-top:20px">Su primer EP es una declaración de identidad: un recorrido sonoro donde conviven la nostalgia, el pop contemporáneo y los sonidos que lo anclan a su tierra: el cajón y el charango.</p>
+      <h3>Tracklist</h3>
+      <ol>
+        <li><b>01</b> Imposible</li>
+        <li><b>02</b> Desde Aquí</li>
+        <li><b>03</b> Raíz</li>
+        <li><b>04</b> Lejos de Casa</li>
+        <li><b>05</b> Otra Vez</li>
+      </ol>
+    </div>
+    <div class="disco"><span class="vinilo"></span><img class="portada" src="./assets/img/portada.jpg" alt="Portada del EP Imposible" /></div>
+  </div>
+</section>
+
+<!-- 4 · REALIDAD AUMENTADA (botón 1) -->
+<section class="sec rojo dale" id="ar">
+  <div class="chakana" style="left:-52px;top:44%"></div><div class="chakana" style="right:-52px;top:44%"></div>
+  <span class="estrella" style="right:40px;top:80px"></span>
+  <div class="in cols">
+    <div>
+      <h2>Dale<br/><span>Play</span></h2>
+      <p class="lead">Experiencia de realidad aumentada</p>
+      <p>Escanea la imagen target y descubre un contenido exclusivo del universo Kike.</p>
+      <a class="btn crema ancho" href="./ar/">&#9679;&nbsp; Escanear ahora</a>
+      <ol class="pasos">
+        <li>Abre la cámara desde esta página.</li>
+        <li>Apunta al afiche o a la portada del vinilo.</li>
+        <li>Vive la experiencia de realidad aumentada.</li>
+      </ol>
+    </div>
+    <div class="marco"><i></i><i></i><i></i><i></i><img src="./assets/img/afiche.jpg" alt="Imagen target: afiche de Imposible" /></div>
+  </div>
+  <div class="montanas cr"></div>
+</section>
+
+<!-- 5 · FILTRO FACIAL (botón 2) -->
+<section class="sec crema papel filtro" id="filtro">
+  <span class="estrella" style="right:28px;top:90px"></span>
+  <div class="in cols">
+    <div>
+      <h2>Filtro<br/>facial</h2>
+      <p class="lead">Ahora eres parte del universo Kike.</p>
+      <p>Prueba el filtro oficial y vive la estética del EP en tu propia historia.</p>
+      <a class="btn rojo ancho" href="./filtro/">&#9679;&nbsp; Probar filtro</a>
+    </div>
+    <div class="telefono"><img src="./assets/img/kike-foto.png" alt="" /><span class="obt"></span></div>
+  </div>
+  <div class="montanas"></div>
+</section>
+
+<!-- 6 · CIERRE -->
+<section class="sec negro cierre papel" style="padding-bottom:170px">
+  <span class="estrella" style="right:36px;top:110px"></span>
+  <div class="in">
+    <h2>De mis raíces<br/>al mundo.</h2>
+    <span class="garabato"></span>
+    <p style="font:400 clamp(30px,8vw,52px)/1 var(--titulo);text-transform:uppercase">Esto es</p>
+    <img class="logo" src="./assets/logos/kike-blanco.png" alt="Kike" onerror="this.src='./assets/logos/kike-blanco.png'" />
+    <p class="eslogan">Perú cruza fronteras</p>
+  </div>
+</section>
+<footer class="pie">Permite el acceso a la cámara cuando el navegador lo pida.</footer>
+
 </body>
 </html>
