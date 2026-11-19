@@ -2,20 +2,40 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>KIKE · Filtro facial</title>
-  <meta name="theme-color" content="#F2E1BF" />
+  <meta name="theme-color" content="#B6271D" />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/kike.css" />
+  <link rel="stylesheet" href="css/filtro.css" />
+  <script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.181.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.181.1/examples/jsm/" } }
+  </script>
 </head>
-<body class="exp crema papel" style="display:flex">
-  <header><img src="../assets/logos/kike-rojo.png" alt="Kike" /><a class="volver" href="../">&larr; Volver</a></header>
-  <main>
-    <span class="estrella" style="left:12%;top:8%"></span>
-    <h1>Filtro<br/>facial</h1>
-    <p>Ahora eres parte del universo Kike. Usa la cámara frontal.</p>
-    <p class="nota">Aquí irá el filtro facial (en construcción).</p>
-  </main>
-  <div class="montanas"></div>
+<body>
+  <div id="app"><video id="video-renderer" playsinline muted></video><canvas id="canvas-renderer"></canvas></div>
+  <div id="flash"></div>
+
+  <div id="ui" class="off">
+    <div class="top"><img src="../assets/logos/kike-blanco.png" alt="Kike" /><a href="../">&larr; Inicio</a></div>
+    <div id="nombre">KIKE ROJO</div>
+    <div id="buscando">Busca tu cara…</div>
+    <div id="hint">Levanta las cejas · abre la boca · sonríe</div>
+    <div class="bottom"><div id="chips"></div><button id="foto">FOTO</button></div>
+  </div>
+
+  <section id="inicio" class="pantalla">
+    <img class="logo" src="../assets/logos/kike-blanco.png" alt="Kike" />
+    <h1>Ponte el<br/>filtro</h1>
+    <p>Tu cara, versión Kike. Cambia de look con tus gestos y suena a música peruana.</p>
+    <div class="gestos"><span>Cejas</span><span>Boca</span><span>Sonrisa</span></div>
+    <button id="iniciar" class="btn">Activar cámara</button>
+    <a class="volver" href="../">&larr; Volver</a>
+  </section>
+  <section id="cargando" class="pantalla off"><h1>Cargando…</h1><p>Permite la cámara cuando el navegador lo pida.</p></section>
+  <section id="error" class="pantalla off"><h1>No pude abrir la cámara</h1><p>Revisa el permiso de cámara del navegador y vuelve a intentarlo.</p><button class="btn" onclick="location.reload()">Reintentar</button></section>
+
+  <script type="module" src="js/kike-filtro.js"></script>
 </body>
 </html>
