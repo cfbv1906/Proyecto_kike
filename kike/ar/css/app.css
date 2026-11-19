@@ -1,0 +1,17 @@
+body{margin:0;background:#000;font-family:"Outfit",system-ui,sans-serif;overflow:hidden}
+canvas{display:block}
+#ar-container{position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;z-index:1}
+#ar-container video{z-index:-2}
+#overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:24px;
+  background:#B6271D url(../assets/img/textura-kike.jpg) center/700px;color:#F2E1BF;z-index:2000;transition:opacity .4s ease}
+#overlay.hidden{opacity:0;pointer-events:none}
+#overlay img.logo{width:min(220px,58vw)}
+#overlay h1{font:400 clamp(44px,13vw,78px)/.95 "Anton","Arial Narrow",Impact,sans-serif;text-transform:uppercase;margin:0;transform:skewX(-5deg)}
+#overlay h1 span{color:#F4C452}
+#overlay p{margin:0;max-width:340px;font-size:16px;line-height:1.45}
+#start-button{font:400 22px "Anton","Arial Narrow",Impact,sans-serif;letter-spacing:.08em;text-transform:uppercase;background:#F2E1BF;color:#B6271D;border:0;border-radius:99px;padding:16px 38px;cursor:pointer;box-shadow:0 6px 0 #0004}
+#start-button:active{transform:translateY(2px);box-shadow:0 3px 0 #0004}
+#progress-container{display:none;flex-direction:column;align-items:center;gap:8px;width:min(260px,70vw)}
+#progress-bar-track{width:100%;height:6px;background:#F2E1BF44;border-radius:99px;overflow:hidden}
+#progress-bar-fill{height:100%;width:0;background:#F4C452;transition:width .2s}
+#progress-label{font-size:13px;opacity:.9}

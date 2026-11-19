@@ -1,21 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
   <title>KIKE · Dale Play — Realidad aumentada</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
   <meta name="theme-color" content="#B6271D" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../css/kike.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/kike-ui.css" />
+  <script type="importmap">
+  { "imports": {
+      "three": "./js/three.compat.js",
+      "three/addons/": "./js/addons/",
+      "mindar-image-three": "https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js"
+  } }
+  </script>
 </head>
-<body class="exp rojo" style="display:flex">
-  <header><img src="../assets/logos/kike-blanco.png" alt="Kike" /><a class="volver" href="../">&larr; Volver</a></header>
-  <main>
-    <span class="estrella" style="left:12%;top:8%"></span><span class="estrella" style="right:10%;bottom:22%"></span>
-    <h1>Dale<br/><span style="color:var(--amarillo)">Play</span></h1>
-    <p>Apunta la cámara al afiche o a la portada del vinilo de Kike.</p>
-    <p class="nota">Aquí irá la experiencia de realidad aumentada (en construcción).</p>
-  </main>
-  <div class="montanas"></div>
+<body ontouchstart="">
+  <div id="ar-container"></div>
+
+  <div id="overlay">
+    <img class="logo" src="../assets/logos/kike-blanco.png" alt="Kike" />
+    <h1>Dale<br/><span>Play</span></h1>
+    <p>Cuando la cámara se abra, apunta al afiche de <b>Imposible</b> y deja que el vinilo suene.</p>
+    <button id="start-button">Iniciar</button>
+    <div id="progress-container">
+      <div id="progress-bar-track"><div id="progress-bar-fill"></div></div>
+      <div id="progress-label">Cargando... 0%</div>
+    </div>
+  </div>
+
+  <script type="module">
+    import * as THREE from './js/three.module.js';
+    import { APP } from './js/app.js';
+    import { MindARController } from './js/mindar/mindar_controller.js';
+
+    window.THREE = THREE; // lo usan los scripts de la escena
+
+    const overlay = document.getElementById('overlay');
+    const startButton = document.getElementById('start-button');
+    const arContainer = document.getElementById('ar-container');
+    const progressContainer = document.getElementById('progress-container');
+    const progressFill = document.getElementById('progress-bar-fill');
+    const progressLabel = document.getElementById('progress-label');
+    const debugMode = new URLSearchParams(location.search).get('debug') === '1';
+
+    let player = null, mindarController = null, loaded = false, loadPromise = null;
+
+    function setProgress(p, text) { progressFill.style.width = `${p}%`; progressLabel.textContent = `${text} ${p}%`; }
+
+    async function loadEverything() {
+      if (loadPromise) return loadPromise;
+      loadPromise = (async () => {
+        setProgress(0, 'Cargando escena...');
+        const text = await new Promise((resolve, reject) => {
+          new THREE.FileLoader().load('app.json', resolve,
+            (e) => { if (e.lengthComputable) setProgress(Math.round((e.loaded / e.total) * 25), 'Cargando escena...'); },
+            (err) => reject(new Error(err.statusText || 'No se pudo descargar la escena')));
+        });
+        player = new APP.Player({ alpha: true });
+        await player.load(JSON.parse(text));
+        player.setSize(window.innerWidth, window.innerHeight);
+        player.play();
+        setProgress(55, 'Escena lista...');
+        document.body.appendChild(player.dom);
+        window.addEventListener('resize', () => player.setSize(window.innerWidth, window.innerHeight));
+        window.player = player;
+        setProgress(85, 'Preparando AR...');
+        await new Promise((r) => setTimeout(r, 10));
+        setProgress(100, 'Listo');
+        loaded = true;
+      })().catch((e) => { loaded = false; loadPromise = null; throw e; });
+      return loadPromise;
+    }
+
+    // La cámara y el audio se inician dentro del gesto del usuario (botón Iniciar).
+    startButton.addEventListener('click', async () => {
+      progressContainer.style.display = 'flex';
+      try {
+        await loadEverything();
+        if (!loaded) return;
+        setProgress(90, 'Iniciando cámara...');
+        mindarController = new MindARController(arContainer, player, debugMode);
+        window.mindarController = mindarController;
+        await mindarController.start();
+        if (player?.dom) player.dom.style.display = 'none';
+        overlay.classList.add('hidden');
+        setTimeout(() => overlay.remove(), 400);
+      } catch (e) {
+        console.error('Error durante la carga:', e);
+        startButton.textContent = 'Reintentar';
+        setProgress(0, 'Error al iniciar');
+      }
+    });
+
+    loadEverything().catch((e) => {
+      console.error('Error durante la carga automática:', e.message);
+      progressContainer.style.display = 'flex';
+      setProgress(0, 'Error al cargar');
+      startButton.textContent = 'Reintentar';
+    });
+  </script>
+  <script type="module" src="js/kike-ui.js"></script>
 </body>
 </html>
